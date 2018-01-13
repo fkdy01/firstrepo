@@ -1,14 +1,23 @@
 pipeline {
-  agent {
-    docker {
-      image 'ubuntu'
-    }
-    
-  }
+  agent any
   stages {
-    stage('') {
+    stage('error') {
+      parallel {
+        stage('error') {
+          steps {
+            error 'error'
+          }
+        }
+        stage('s1') {
+          steps {
+            bat(script: 'echo coucou', returnStatus: true, returnStdout: true)
+          }
+        }
+      }
+    }
+    stage('end') {
       steps {
-        sh 'echo coucou'
+        echo 'end'
       }
     }
   }
